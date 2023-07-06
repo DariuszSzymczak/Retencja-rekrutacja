@@ -1,42 +1,79 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
-  </q-page>
+  <div class="user-list">
+    <div class="search-wrapper">
+      <div class="">
+        <div class="row search-input-wrapper ">
+          <div class="col-1 text-center">
+            <q-icon name="search" class="search-icon" />
+
+          </div>
+          <div class="col-11">
+            <input type="text" v-model="searchQuery" placeholder="Szukaj użytkowników..." class="search-input"
+              @keyup="searchHandler" />
+
+          </div>
+        </div>
+      </div>
+      <div class="checkbox-wrapper">
+        <q-checkbox v-model="showAll" class="checkbox"></q-checkbox>
+        <span class="checkbox-label">Show All Users</span>
+      </div>
+    </div>
+
+    <UserList v-if="showAll" :data="userList" />
+    <UserList v-else :data="filteredUsers" />
+    <b v-if="listError" class="list-error"> {{ listError }}</b>
+
+  </div>
 </template>
 
-<script setup lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { ref } from 'vue';
 
-const todos = ref<Todo[]>([
-  {
-    id: 1,
-    content: 'ct1'
-  },
-  {
-    id: 2,
-    content: 'ct2'
-  },
-  {
-    id: 3,
-    content: 'ct3'
-  },
-  {
-    id: 4,
-    content: 'ct4'
-  },
-  {
-    id: 5,
-    content: 'ct5'
+
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { UserData } from './../components/UserList.vue';
+import UserList from './../components/UserList.vue';
+const showAll = ref(false);
+const searchQuery = ref<string>('');
+const userList = ref<UserData[]>([]);
+const filteredUsers = ref<UserData[]>([]);
+const listError = ref('');
+function searchHandler() {
+  filteredUsers.value = searchUsers(searchQuery.value);
+  showAll.value = false;
+}
+
+function searchUsers(searchQuery: string) {
+  if (!searchQuery) {
+    return [];
   }
-]);
-const meta = ref<Meta>({
-  totalCount: 1200
+
+
+  const filteredUsers = userList.value.filter((user: UserData) => {
+    const fullName = `${user.first_name} ${user.last_name}`;
+    return fullName.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
+  return filteredUsers;
+}
+
+async function getUserList() {
+  try {
+    const response = await axios.get('https://reqres.in/api/users?page=2');
+    userList.value = response.data.data;
+    listError.value = '';
+  } catch (error) {
+    console.error(error);
+    listError.value = 'Wystąpił błąd podczas pobierania danych użytkowników';
+    setTimeout(getUserList, 3000)
+  }
+}
+
+
+onMounted(async () => {
+  await  getUserList();
 });
+
 </script>
