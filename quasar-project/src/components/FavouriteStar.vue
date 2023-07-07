@@ -5,13 +5,18 @@
 
 <script setup lang="ts">
 const props = defineProps(['id'])
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 const isFav = ref<boolean>(false);
-isFavourite(props.id);
+onMounted(()=>{
+  isFavourite(props.id);
+})
 
 function setFavourite(userId: number) {
+console.log(localStorage.getItem('favourites'))
   const favouriteUsers = localStorage.getItem('favourites')?.split(',').map(el => parseInt(el));
   if (!favouriteUsers?.includes(userId)) {
+
+    console.log(' setFavourite if ')
     favouriteUsers?.push(userId);
     const newList = favouriteUsers?.join(',') + '';
     localStorage.setItem('favourites', newList)
@@ -31,6 +36,7 @@ function isFavourite(userId: number) {
 }
 
 function removeFavourite(userId: number) {
+
   const favouriteUsers = localStorage.getItem('favourites')?.split(',').map(el => parseInt(el));
   const updatedFavourites = favouriteUsers?.filter(el => el !== userId);
   if (updatedFavourites) {

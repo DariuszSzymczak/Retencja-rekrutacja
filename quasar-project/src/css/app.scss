@@ -154,7 +154,9 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
-
+  border-bottom:  1px solid rgb(212, 212, 212);
+  margin-bottom: 1vw;
+  padding: 0;
   & h6 {
     margin: 0;
   }
@@ -195,4 +197,21 @@ body {
   color: rgb(151, 10, 10);
   width: 100%;
   text-align: center;
+}
+
+.user-page{
+  background-color: white ;
+}
+
+.star-box{
+  justify-content: flex-start;
+}
+
+.star-box img{
+  width : 60px;
+}
+
+.user-details-text{
+  position: relative;
+  left: 20px;
 }

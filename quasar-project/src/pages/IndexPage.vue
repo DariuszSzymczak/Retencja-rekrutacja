@@ -45,6 +45,7 @@ function searchHandler() {
   showAll.value = false;
 }
 
+
 function searchUsers(searchQuery: string) {
   if (!searchQuery) {
     return [];
