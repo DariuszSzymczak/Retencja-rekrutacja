@@ -1,7 +1,7 @@
 <template>
   <div class="user-list user-page">
     <q-toolbar class="user-details-header">
-      <h6>Szczegóły</h6>
+      <h6>User Details</h6>
       <q-btn flat round dense icon="close" @click="goBack" />
     </q-toolbar>
     <div class="user-details-body row">
@@ -11,7 +11,7 @@
           <span>{{ activeUser?.id }}</span>
         </div>
         <div class="user-detail">
-          <b>Imie i nazwisko:</b>
+          <b>Name and Surname:</b>
           <span>{{ activeUser?.first_name }} {{ activeUser?.last_name }}</span>
         </div>
         <div class="user-detail">
@@ -19,7 +19,7 @@
           <span>{{ activeUser?.email }}</span>
         </div>
         <div class="user-detail">
-          <b>Ulubione:</b>
+          <b>Favourite:</b>
           <span class="star-box">
             <FavouriteStar :id="activeUser?.id" />
           </span>

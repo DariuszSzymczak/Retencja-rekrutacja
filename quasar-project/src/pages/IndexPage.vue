@@ -1,5 +1,6 @@
 <template>
   <div class="user-list">
+    <h2 class="text-center">User List</h2>
     <div class="search-wrapper">
       <div class="">
         <div class="row search-input-wrapper ">
@@ -8,7 +9,7 @@
 
           </div>
           <div class="col-11">
-            <input type="text" v-model="searchQuery" placeholder="Szukaj użytkowników..." class="search-input"
+            <input type="text" v-model="searchQuery" placeholder="Search Users..." class="search-input"
               @keyup="searchHandler" />
 
           </div>

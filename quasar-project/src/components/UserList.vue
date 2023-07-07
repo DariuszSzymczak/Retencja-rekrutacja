@@ -12,7 +12,7 @@
           </div>
           <div class="user-list-item-footer">
             <FavouriteStar :id="user.id" />
-            <q-btn color="primary" icon="search" label="Szczegóły" @click="() => { navigateToUserPage(user) }" />
+            <q-btn color="primary" icon="search" label="Show Details" @click="() => { navigateToUserPage(user) }" />
           </div>
         </div>
         <div class="col-sm-5 col-sm-5 col-xs-5 col-md-5 col-lg-2">
